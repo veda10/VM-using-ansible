@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: download image
+    get_url:
+       url: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+       dest: /home/vbarrenk/Downloads/CentOS-7-x86_64-GenericCloudssh.qcow2
+  - name: copy image to particular location
+    copy:
+      src: /home/vbarrenk/Downloads/CentOS-7-x86_64-GenericCloudssh.qcow2
+      dest: /var/lib/libvirt/images/
+  - name: enable password
+    command: virt-customize -a /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloudssh.qcow2 --root-password password:redhat
+  - name: enable ssh
+    command: virt-customize -a /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloudssh.qcow2 --run-command 'systemctl enable sshd'
+  - name: install VM
+    command: virt-install --ram 4096 --vcpus 4 --disk path=/var/lib/libvirt/images/CentOS-7-x86_64-GenericCloudssh.qcow2,device=disk,bus=virtio,format=qcow2 --import --noautoconsole --vnc --network network:default --name centos_ssh  
+   
+
+

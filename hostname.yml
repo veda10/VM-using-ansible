@@ -1,0 +1,16 @@
+---
+
+- hosts: presentvm          
+  become: yes
+  gather_facts: no
+  tasks:
+  - hostname:
+       name: veda_ansible
+   
+
+  - name: display hostname of vm
+    command: hostname
+    register: hostname
+  - debug:
+      var: hostname.stdout
+

@@ -1,0 +1,11 @@
+[vm]
+192.168.122.103 ansible_ssh_user=root
+
+
+[shrutika_laptop]
+10.76.97.49 ansible_ssh_user=root
+
+[presentvm]
+192.168.122.161 ansible_ssh_user=root ansible_ssh_pass=redhat
+
+
